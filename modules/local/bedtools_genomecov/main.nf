@@ -7,6 +7,8 @@ process BEDTOOLS_GENOMECOV {
         'https://depot.galaxyproject.org/singularity/bedtools:2.30.0--hc088bd4_0' :
         'biocontainers/bedtools:2.30.0--hc088bd4_0' }"
 
+    ext args: '-split -du'
+
     input:
     tuple val(meta), path(bam)
 

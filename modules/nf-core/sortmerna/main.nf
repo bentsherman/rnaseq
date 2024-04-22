@@ -7,6 +7,8 @@ process SORTMERNA {
         'https://depot.galaxyproject.org/singularity/sortmerna:4.3.6--h9ee0642_0' :
         'biocontainers/sortmerna:4.3.6--h9ee0642_0' }"
 
+    ext args: '--num_alignments 1 -v'
+
     input:
     tuple val(meta), path(reads)
     path  fastas

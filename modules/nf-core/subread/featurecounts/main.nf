@@ -7,8 +7,16 @@ process SUBREAD_FEATURECOUNTS {
         'https://depot.galaxyproject.org/singularity/subread:2.0.1--hed695b0_0' :
         'biocontainers/subread:2.0.1--hed695b0_0' }"
 
+    ext args: { [
+        '-B -C',
+        "-g $biotype",
+        "-t $feature_type"
+    ].join(' ').trim() }
+
     input:
     tuple val(meta), path(bams), path(annotation)
+    val biotype
+    val feature_type
 
     output:
     tuple val(meta), path("*featureCounts.txt")        , emit: counts

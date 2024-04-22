@@ -33,7 +33,7 @@ workflow ALIGN_STAR {
     ch_fastq          = Channel.empty()
     ch_tab            = Channel.empty()
     if (is_aws_igenome) {
-        STAR_ALIGN_IGENOMES ( reads, index, gtf, star_ignore_sjdbgtf, seq_platform, seq_center )
+        STAR_ALIGN_IGENOMES ( reads, index, gtf, star_ignore_sjdbgtf, seq_platform, seq_center, params.save_unaligned, params.extra_star_align_args )
         ch_orig_bam       = STAR_ALIGN_IGENOMES.out.bam
         ch_log_final      = STAR_ALIGN_IGENOMES.out.log_final
         ch_log_out        = STAR_ALIGN_IGENOMES.out.log_out
@@ -44,7 +44,7 @@ workflow ALIGN_STAR {
         ch_tab            = STAR_ALIGN_IGENOMES.out.tab
         ch_versions       = ch_versions.mix(STAR_ALIGN_IGENOMES.out.versions.first())
     } else {
-        STAR_ALIGN ( reads, index, gtf, star_ignore_sjdbgtf, seq_platform, seq_center )
+        STAR_ALIGN ( reads, index, gtf, star_ignore_sjdbgtf, seq_platform, seq_center, params.save_unaligned, params.extra_star_align_args )
         ch_orig_bam       = STAR_ALIGN.out.bam
         ch_log_final      = STAR_ALIGN.out.log_final
         ch_log_out        = STAR_ALIGN.out.log_out

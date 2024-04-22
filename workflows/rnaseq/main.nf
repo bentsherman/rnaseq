@@ -576,7 +576,8 @@ workflow RNASEQ {
     if (!params.skip_alignment && !params.skip_stringtie) {
         STRINGTIE_STRINGTIE (
             ch_genome_bam,
-            ch_gtf
+            ch_gtf,
+            params.stringtie_ignore_gtf
         )
         ch_versions = ch_versions.mix(STRINGTIE_STRINGTIE.out.versions.first())
     }
@@ -600,7 +601,9 @@ workflow RNASEQ {
             .set { ch_featurecounts }
 
         SUBREAD_FEATURECOUNTS (
-            ch_featurecounts
+            ch_featurecounts,
+            biotype,
+            params.featurecounts_feature_type
         )
         ch_versions = ch_versions.mix(SUBREAD_FEATURECOUNTS.out.versions.first())
 
@@ -777,6 +780,7 @@ workflow RNASEQ {
             ch_multiqc_files.collect(),
             ch_multiqc_config.toList(),
             ch_multiqc_custom_config.toList(),
+            params.multiqc_title,
             ch_multiqc_logo.toList()
         )
         ch_multiqc_report = MULTIQC.out.report

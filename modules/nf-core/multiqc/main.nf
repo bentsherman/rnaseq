@@ -6,10 +6,14 @@ process MULTIQC {
         'https://depot.galaxyproject.org/singularity/multiqc:1.20--pyhdfd78af_0' :
         'biocontainers/multiqc:1.20--pyhdfd78af_0' }"
 
+    ext args: { multiqc_title ? "--title \"$multiqc_title\"" : '' },
+        prefix: "multiqc_report"
+
     input:
     path  multiqc_files, stageAs: "?/*"
     path(multiqc_config)
     path(extra_multiqc_config)
+    path(multiqc_title)
     path(multiqc_logo)
 
     output:

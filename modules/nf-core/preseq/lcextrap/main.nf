@@ -8,6 +8,8 @@ process PRESEQ_LCEXTRAP {
         'https://depot.galaxyproject.org/singularity/preseq:3.1.2--h445547b_2':
         'biocontainers/preseq:3.1.2--h445547b_2' }"
 
+    ext args: '-verbose -bam -seed 1 -seg_len 100000000'
+
     input:
     tuple val(meta), path(bam)
 

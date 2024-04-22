@@ -9,6 +9,7 @@ process GFFREAD {
 
     input:
     path gff
+    val  args
 
     output:
     path "*.gtf"        , emit: gtf         , optional: true
@@ -19,7 +20,6 @@ process GFFREAD {
     task.ext.when == null || task.ext.when
 
     script:
-    def args        = task.ext.args   ?: ''
     def prefix      = task.ext.prefix ?: "${gff.baseName}"
     def extension   = args.contains("-T") ? 'gtf' : 'gffread.gff3'
     """

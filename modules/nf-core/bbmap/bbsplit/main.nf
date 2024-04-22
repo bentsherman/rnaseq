@@ -8,6 +8,8 @@ process BBMAP_BBSPLIT {
         'https://depot.galaxyproject.org/singularity/bbmap:39.01--h5c4e2a8_0':
         'biocontainers/bbmap:39.01--h5c4e2a8_0' }"
 
+    ext args: 'build=1 ambiguous2=all maxindel=150000'
+
     input:
     tuple val(meta), path(reads)
     path  index

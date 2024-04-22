@@ -7,9 +7,15 @@ process STRINGTIE_STRINGTIE {
         'https://depot.galaxyproject.org/singularity/stringtie:2.2.1--hecb563c_2' :
         'biocontainers/stringtie:2.2.1--hecb563c_2' }"
 
+    ext args: { [
+        '-v',
+        ignore_gtf ? '' : '-e'
+    ].join(' ').trim() }
+
     input:
     tuple val(meta), path(bam)
     path  annotation_gtf
+    val   ignore_gtf
 
     output:
     tuple val(meta), path("*.transcripts.gtf"), emit: transcript_gtf

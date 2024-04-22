@@ -90,7 +90,7 @@ workflow PREPARE_GENOME {
             } else {
                 ch_gff = Channel.value(file(gff))
             }
-            ch_gtf      = GFFREAD ( ch_gff ).gtf
+            ch_gtf      = GFFREAD ( ch_gff, params.gffread_args ?: '' ).gtf
             ch_versions = ch_versions.mix(GFFREAD.out.versions)
         }
 

@@ -7,6 +7,21 @@ process STAR_ALIGN {
         'https://depot.galaxyproject.org/singularity/mulled-v2-1fa26d1ce03c295fe2fdcf85831a92fbcbd7e8c2:ded3841da0194af2701c780e9b3d653a85d27489-0' :
         'biocontainers/mulled-v2-1fa26d1ce03c295fe2fdcf85831a92fbcbd7e8c2:ded3841da0194af2701c780e9b3d653a85d27489-0' }"
 
+    ext args: { [
+        '--quantMode TranscriptomeSAM',
+        '--twopassMode Basic',
+        '--outSAMtype BAM Unsorted',
+        '--readFilesCommand zcat',
+        '--runRNGseed 0',
+        '--outFilterMultimapNmax 20',
+        '--alignSJDBoverhangMin 1',
+        '--outSAMattributes NH HI AS NM MD',
+        '--quantTranscriptomeBan Singleend',
+        '--outSAMstrandField intronMotif',
+        save_unaligned ? '--outReadsUnmapped Fastx' : '',
+        extra_args ? extra_args.split("\\s(?=--)") : ''
+    ].flatten().unique(false).join(' ').trim() }
+
     input:
     tuple val(meta), path(reads, stageAs: "input*/*")
     tuple val(meta2), path(index)
@@ -14,6 +29,8 @@ process STAR_ALIGN {
     val star_ignore_sjdbgtf
     val seq_platform
     val seq_center
+    val save_unaligned
+    val extra_args
 
     output:
     tuple val(meta), path('*Log.final.out')   , emit: log_final
